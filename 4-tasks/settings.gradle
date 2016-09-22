@@ -1,0 +1,5 @@
+include '1-simple-task'
+include '2-task-dependencies'
+include '3-built-in-tasks'
+include '4-custom-tasks'
+
