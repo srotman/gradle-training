@@ -1,0 +1,1 @@
+println "[initialization | project: $rootProject.name       ] -- project initialization"

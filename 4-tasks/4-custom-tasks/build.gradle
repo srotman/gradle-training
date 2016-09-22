@@ -1,0 +1,42 @@
+task foo (type: Foo) {
+	foo = 'foo'
+}
+
+task bar (type: Foo) {
+	foo = 'bar'
+	bar = 'foo'
+}
+
+task baz (type: Foo)
+
+class Foo extends DefaultTask {
+	String foo
+	String bar = 'bar'
+	
+	@TaskAction
+	def taskAction() {
+		println "[$name] foo: $foo; bar: $bar"
+	}
+}
+
+/*
+ * TODO: 1. extract the checksum task to a custom Task in the buildScript directory
+ * TODO: 2. The checksum task should be able to generate checksums over files as well as over strings
+ * TODO: 3. The ckecksum task should be able to write filename + checksum to a separate checksum file
+ * 				filename1: file1-sha  
+ * 				filename2: file2-sha
+ */
+
+task checksum {
+	ext.input = 'Some string';
+}
+
+checksum << {
+	println "$ext.input: ${sha256 ext.input.bytes}"
+}
+
+def sha256(byte[] bytes) {
+	def digest = java.security.MessageDigest.getInstance("SHA-256")
+	digest.update( bytes )
+	new BigInteger(1, digest.digest()).toString(16).padLeft(64, '0');
+}

@@ -1,0 +1,32 @@
+task hello << {
+	print 'Hello, '
+}
+
+task world (dependsOn: 'hello') << {
+	println 'World!'
+}
+
+
+/* ************************************************
+ * TODO: Add task dependencies, in such a way that for each
+ * task, all tasks with a smaller number are executed first.
+ * 
+ * --> Use 3 different ways to specify the task dependencies
+ * 
+ * ***********************************************/
+task task1 << {
+	println '1. Task'
+}
+
+task task2 << {
+	println '2. Task'
+}
+
+task task3 << {
+	println '3. Task'
+}
+
+task task4 << {
+	println '4. Task'
+}
+

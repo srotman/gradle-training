@@ -1,0 +1,5 @@
+println "[initialization |                                 ] -- init-script statement"
+
+initscript {
+	println "[initialization |                                 ] -- {initscript} closure"
+}

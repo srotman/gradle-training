@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+group = 'ch.puzzle.gradle'
+//name = 'hello-world' --> Set in settings.gradle
+version = '0.1-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+task sourceJar(type: Jar) {
+	description = 'assemble source jar'
+	from sourceSets.main.allJava
+}
+
+publishing {
+	
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			
+			artifact sourceJar {
+				classifier "sources"
+			}
+		}
+	}
+	
+	repositories {
+		maven {
+			url "$buildDir/repo"
+		}
+	}
+}

@@ -1,0 +1,22 @@
+afterEvaluate {project ->
+	println "[configuration  | project: $project.name       ] -- {afterEvaluate} closure"	
+}
+
+println "[configuration  | project: $project.name       ] -- configuration statement"
+
+task print (type: PrintExecution) {
+	doFirst {
+		println "[execution      | task:    $project.name:$name ] -- {doFirst} closure"
+	}
+	doLast {
+		println "[execution      | task:    $project.name:$name ] -- {doLast} closure"
+	}
+	println "[configuration  | task:    $project.name:$name ] -- configuration statement"
+}
+
+class PrintExecution extends DefaultTask {
+	@TaskAction
+	def taskAction() {
+		println "[execution      | task:    $project.name:$name ] -- @TaskAction execution"
+	}
+}

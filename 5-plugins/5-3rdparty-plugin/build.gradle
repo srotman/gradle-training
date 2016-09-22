@@ -1,0 +1,20 @@
+//plugins {
+//	id "org.gradle.hello-world" version "0.2"
+//}
+
+buildscript {
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath "org.gradle:gradle-hello-world-plugin:0.2"
+	}
+}
+apply plugin: "org.gradle.hello-world"
+
+/* *********************************************
+ * TODO: 1. Extend the helloWorld task to say something else besides 'Hello, World!' 
+ * TODO: 2. Overwrite the helloWorld task to say something completely different.
+ * ********************************************/

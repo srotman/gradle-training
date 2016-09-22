@@ -1,0 +1,41 @@
+task clean(type: Delete) {
+	delete 'build'
+}
+
+task unzipLogos(type: Copy) {
+	from zipTree('src/main/resources/logos.zip')
+	into 'build'
+}
+
+task censor(type: Copy) {
+	from 'src/main/resources'
+	into 'build'
+	include '*.txt'
+	rename { filename -> filename - '.txt' + '-censored.txt' }
+	filter { line -> line.replaceAll(/[Ll]orem/, "*****") }
+
+}
+
+task cleanCensor(type: Delete) {
+	delete fileTree(dir: 'build', include: '*-censored.txt')
+}
+
+task copyLipsum(type: Copy) {
+	//TODO: copy all lipsum files from txt to build (unmodified, not censored)
+}
+
+task cleanLipsum {
+	//TODO: clean all lipsum files from build dir (revert the copyLipsum task)
+}
+
+task zipLipsum(type: Zip) {
+	//TODO: create a Zip-Archive with only the unmodified files, not the censored ones
+}
+
+task zipCensor {
+	//TODO: create a Zip-Archive with only the censored files, not the unmodified ones
+}
+
+task zipAll {
+	//TODO: create a Zip-Archive with both the unmodified and the censored files
+}

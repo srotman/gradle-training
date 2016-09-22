@@ -1,0 +1,16 @@
+// The simplest task definition
+task foo
+
+/* ************************************************
+ * TODO: Implement 'greeter' tasks that each produce the output 'Hello, World!'
+ *
+ * --> Use 4 different implementation flavors
+ * ***********************************************/
+
+task helloWorld1
+
+task helloWorld2
+
+task helloWorld3
+
+task helloWorld4

@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+group = 'ch.puzzle.gradle'
+version = '0.1-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+task sourceJar(type: Jar) {
+	description = 'assemble source jar'
+	classifier = 'sources'
+	from sourceSets.main.allJava
+}
+
+artifacts {
+	archives jar, sourceJar
+}

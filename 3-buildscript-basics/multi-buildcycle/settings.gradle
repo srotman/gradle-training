@@ -1,0 +1,4 @@
+println "[initialization | project: $rootProject.name       ] -- rootproject initialization"
+
+include 'multi-build-sub1'
+include 'multi-build-sub2'
