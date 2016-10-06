@@ -18,15 +18,19 @@ task task1 << {
 	println '1. Task'
 }
 
-task task2 << {
+task task2(dependsOn: task1) << {
 	println '2. Task'
 }
 
-task task3 << {
-	println '3. Task'
+task task3 {
+	dependsOn task2
+	doLast {
+		println '3. Task'
+	}
 }
 
 task task4 << {
 	println '4. Task'
 }
+task4.dependsOn task3
 

@@ -22,20 +22,50 @@ task cleanCensor(type: Delete) {
 
 task copyLipsum(type: Copy) {
 	//TODO: copy all lipsum files from txt to build (unmodified, not censored)
+	from 'src/main/resources'
+	into 'build'
+	include '*.txt'
 }
 
-task cleanLipsum {
+task cleanLipsum(type: Delete) {
 	//TODO: clean all lipsum files from build dir (revert the copyLipsum task)
+	delete fileTree(dir: 'build', include: '*.txt', exclude: '*-censored.txt')
 }
 
 task zipLipsum(type: Zip) {
 	//TODO: create a Zip-Archive with only the unmodified files, not the censored ones
+	dependsOn copyLipsum
+	destinationDir = buildDir
+	baseName = 'lipsum'
+	classifier = 'unmodified'
+
+	from 'build'
+	include '**/*.txt'
+	exclude {
+		spec -> spec.file.name.endsWith('.txt') &&
+			spec.file.name.contains('censored')
+	}
 }
 
-task zipCensor {
+task zipCensor(type: Zip)  {
 	//TODO: create a Zip-Archive with only the censored files, not the unmodified ones
+	dependsOn censor
+	destinationDir = buildDir
+	baseName = 'lipsum'
+	classifier = 'censored'
+
+	from('build') {
+		include '**/*-censored.txt'
+	}
 }
 
-task zipAll {
+task zipAll(type: Zip) {
 	//TODO: create a Zip-Archive with both the unmodified and the censored files
+	dependsOn censor, copyLipsum
+	destinationDir = buildDir
+	baseName = 'lipsum'
+	classifier = 'all'
+
+	from 'build'
+	include '**/*.txt'
 }
