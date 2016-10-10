@@ -2,7 +2,7 @@
 task foo
 
 /* ************************************************
- * TODO: Implement 'greeter' tasks that each produce the output 'Hello, World!'
+ * DONE: Implement 'greeter' tasks that each produce the output 'Hello, World!'
  *
  * --> Use 4 different implementation flavors
  * ***********************************************/

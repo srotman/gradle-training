@@ -8,7 +8,7 @@ task world (dependsOn: 'hello') << {
 
 
 /* ************************************************
- * TODO: Add task dependencies, in such a way that for each
+ * DONE: Add task dependencies, in such a way that for each
  * task, all tasks with a smaller number are executed first.
  * 
  * --> Use 3 different ways to specify the task dependencies
