@@ -20,9 +20,9 @@ class Foo extends DefaultTask {
 }
 
 /*
- * DONE: 1. extract the checksum task to a custom Task in the buildScript directory
- * DONE: 2. The checksum task should be able to generate checksums over files as well as over strings
- * DONE: 3. The ckecksum task should be able to write filename + checksum to a separate checksum file
+ * TODO: 1. extract the checksum task to a custom Task in the buildScript directory
+ * TODO: 2. The checksum task should be able to generate checksums over files as well as over strings
+ * TODO: 3. The ckecksum task should be able to write filename + checksum to a separate checksum file
  * 				filename1: file1-sha  
  * 				filename2: file2-sha
  */
@@ -41,34 +41,42 @@ def sha256(byte[] bytes) {
 	new BigInteger(1, digest.digest()).toString(16).padLeft(64, '0');
 }
 
+// **************************************************************
+// DONE: 1. See 4-tasks/buildSrc/src/main/groovy/Checksum1.groovy
+// **************************************************************
 task checksum1(type: Checksum1) {
 	input = 'Some string'
 }
-
 task checksum1Failure(type: Checksum1) {
-	// no input defined
+	// Fail when no explicit input is defined
 }
 
+// **************************************************************
+// DONE: 2. See 4-tasks/buildSrc/src/main/groovy/Checksum2.groovy
+// **************************************************************
 task checksum2String(type: Checksum2) {
 	input = 'build.gradle'
 }
-
 task checksum2File(type: Checksum2) {
 	file = file('build.gradle')
 }
 
+// **************************************************************
+// DONE: 3. See 4-tasks/buildSrc/src/main/groovy/Checksum3.groovy
+// **************************************************************
 task checksum3String(type: Checksum3) {
 	input = 'build.gradle'
 }
-
 task checksum3File(type: Checksum3) {
-	checksumFile file('checksums1')
+	checksumFile file('checksums-single')
+	// Use the file function
 	file file('build.gradle')
 }
 
 task checksum3MoreFiles(type: Checksum3) {
-	checksumFile file('checksums2')
+	checksumFile file('checksums-multi')
 
+	// The file function is written to append
 	file file('build.gradle')
-	file file('build.gradle')
+	file file('.project')
 }

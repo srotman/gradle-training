@@ -19,7 +19,10 @@ class Checksum3 extends DefaultTask {
 			println "$input: ${sha256 input.bytes}"
 		}
 		if (files) {
+			//Ensure checkusm file exists and is empty
 			checksumFile.createNewFile();
+			checksumFile.write ''
+			// Append to checksumFile
 			files.findAll( { it.exists() } ).each {
 				checksumFile.append("$it.name: ${sha256 it.bytes}\n");
 			} 

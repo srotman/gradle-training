@@ -21,24 +21,47 @@ task cleanCensor(type: Delete) {
 }
 
 task copyLipsum(type: Copy) {
-	//DONE: copy all lipsum files from txt to build (unmodified, not censored)
+	//TODO: copy all lipsum files from txt to build (unmodified, not censored)
+	//DONE: Copy task; Copy all files with txt extention from src/main/resources into build
 	from 'src/main/resources'
 	into 'build'
 	include '*.txt'
 }
 
 task cleanLipsum(type: Delete) {
-	//DONE: clean all lipsum files from build dir (revert the copyLipsum task)
+	//TODO: clean all lipsum files from build dir (revert the copyLipsum task)
+	//DONE: Delete task; using fileTree argument with include and exclude mappings
 	delete fileTree(dir: 'build', include: '*.txt', exclude: '*-censored.txt')
 }
 
 task zipLipsum(type: Zip) {
-	//DONE: create a Zip-Archive with only the unmodified files, not the censored ones
-	dependsOn copyLipsum
+	//TODO: create a Zip-Archive with only the unmodified files, not the censored ones
+	//DONE: Zip task (Version 1)
+
+	// Set zip file properties
 	destinationDir = buildDir
 	baseName = 'lipsum'
 	classifier = 'unmodified'
 
+	// Include all txt files from src/main/resources
+	from 'src/main/resources'
+	include '**/*.txt'
+}
+
+task zipLipsumAlternative(type: Zip) {
+	//TODO: create a Zip-Archive with only the unmodified files, not the censored ones
+	//DONE: Zip task (Version 2)
+
+	// Depend on copyLipsum task to prepare zip contents
+	dependsOn copyLipsum
+
+	
+	// Set zip file properties
+	destinationDir = buildDir
+	baseName = 'lipsum'
+	classifier = 'unmodified'
+
+	// Include all txt files from build dir, but exclude those matched in the excludeSpec closure
 	from 'build'
 	include '**/*.txt'
 	exclude {
@@ -48,24 +71,75 @@ task zipLipsum(type: Zip) {
 }
 
 task zipCensor(type: Zip)  {
-	//DONE: create a Zip-Archive with only the censored files, not the unmodified ones
+	//TODO: create a Zip-Archive with only the censored files, not the unmodified ones
+	//DONE: Zip task
+
+	// Depend on censor task to prepare zip contents
 	dependsOn censor
+
+	// Set zip file properties
 	destinationDir = buildDir
 	baseName = 'lipsum'
 	classifier = 'censored'
 
+	// Include all censored-txt files from build dir (using the configureAction closure)
 	from('build') {
 		include '**/*-censored.txt'
 	}
 }
 
 task zipAll(type: Zip) {
-	//DONE: create a Zip-Archive with both the unmodified and the censored files
-	dependsOn censor, copyLipsum
+	//TODO: create a Zip-Archive with both the unmodified and the censored files
+	//DONE: Zip task (Version 1)
+
+	// Depend on censor task to prepare censored zip contents
+	dependsOn censor
+
+	// Set zip file properties
 	destinationDir = buildDir
 	baseName = 'lipsum'
 	classifier = 'all'
 
-	from 'build'
+	//Use 2 separate source folders
+	from('src/main/resources') {
+		include '**/*.txt'
+	}
+	from (buildDir) { 
+		include '**/*-censored.txt'
+	}
+}
+
+task zipAllAlternative(type: Zip) {
+	//TODO: create a Zip-Archive with both the unmodified and the censored files
+	//DONE: Zip task (Version 2)
+
+	// Depend on copyLipsum and censor task to prepare zip contents
+	dependsOn copyLipsum, censor
+
+	// Set zip file properties
+	destinationDir = buildDir
+	baseName = 'lipsum'
+	classifier = 'all'
+
+	//Include all txt files from build dir
+	from buildDir
 	include '**/*.txt'
 }
+
+task zipAllAlternative2(type: Zip) {
+ 	//TODO: create a Zip-Archive with both the unmodified and the censored files
+ 	//DONE: Zip task (Version 3)
+ 
+ 	// Depend on censor task to prepare zip contents
+ 	dependsOn zipLipsum, zipCensor
+
+	// Set zip file properties
+	destinationDir = buildDir
+	baseName = 'lipsum'
+	classifier = 'all'
+ 
+ 	// Include from the outputs of the other zip tasks
+	from zipTree(zipLipsum.outputs.getFiles().first())
+	from zipTree(zipCensor.outputs.getFiles().first())
+}
+ 

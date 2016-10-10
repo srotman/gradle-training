@@ -2,26 +2,30 @@
 task foo
 
 /* ************************************************
- * DONE: Implement 'greeter' tasks that each produce the output 'Hello, World!'
+ * TODO: Implement 'greeter' tasks that each produce the output 'Hello, World!'
  *
  * --> Use 4 different implementation flavors
  * ***********************************************/
 
+//DONE: Flavor 1 - shorthand doLast
 task helloWorld1 << {
 	println 'Hello, World!'
 }
 
+//DONE: Flavor 2 - explicit doLast
 task helloWorld2 {
 	doLast {
 		println 'Hello, World!'
 	}
 }
 
+//DONE: Flavor 3 - doFirst and doLast
 task helloWorld3 {
 	doFirst { print 'Hello, ' }
 	doLast { println 'World!' }
 }
 
+//DONE: Flavor 4 - Task definition and multiple doLast definitions separate
 task helloWorld4
 helloWorld4 << {
 	print 'Hello, '

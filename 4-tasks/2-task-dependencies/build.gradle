@@ -8,7 +8,7 @@ task world (dependsOn: 'hello') << {
 
 
 /* ************************************************
- * DONE: Add task dependencies, in such a way that for each
+ * TODO: Add task dependencies, in such a way that for each
  * task, all tasks with a smaller number are executed first.
  * 
  * --> Use 3 different ways to specify the task dependencies
@@ -18,10 +18,12 @@ task task1 << {
 	println '1. Task'
 }
 
+// Done: Flavor 1: Define in task configuration map
 task task2(dependsOn: task1) << {
 	println '2. Task'
 }
 
+// Done: Flavor 2: Define in configuration closure
 task task3 {
 	dependsOn task2
 	doLast {
@@ -32,5 +34,6 @@ task task3 {
 task task4 << {
 	println '4. Task'
 }
+// Done: Flavor 4: Separate call to dependsOn function
 task4.dependsOn task3
 
