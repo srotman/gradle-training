@@ -18,3 +18,13 @@ apply plugin: "org.gradle.hello-world"
  * TODO: 1. Extend the helloWorld task to say something else besides 'Hello, World!' 
  * TODO: 2. Overwrite the helloWorld task to say something completely different.
  * ********************************************/
+
+// DONE: 1. Extend the helloWorld task to say something else besides 'Hello, World!' 
+helloWorld << {
+	println 'Hello from build.gradle'
+}
+
+// DONE: 2. Overwrite the helloWorld task to say something completely different.
+task helloWorld(overwrite: true) << {
+	println 'Hello from build.gradle'
+}
