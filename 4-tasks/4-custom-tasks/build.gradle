@@ -20,7 +20,7 @@ class Foo extends DefaultTask {
 }
 
 /*
- * TODO: 1. extract the checksum task to a custom Task in the buildScript directory
+ * TODO: 1. extract the checksum task to a custom Task in the buildSrc directory
  * TODO: 2. The checksum task should be able to generate checksums over files as well as over strings
  * TODO: 3. The ckecksum task should be able to write filename + checksum to a separate checksum file
  * 				filename1: file1-sha  
