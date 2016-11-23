@@ -23,7 +23,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
 	compile 'org.hibernate:hibernate:3.6.0.Beta2'
 	compile ('net.sf.jasperreports:jasperreports:6.3.0') {
-		// No transitive dependencies!
+		// No transitive dependencies for this one!
 		//transitive = false
 		
 		
@@ -36,7 +36,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+
 configurations.all {
+        // No transitive dependencies at ALL!
+        //transitive = false
 	
 	exclude module: 'itext'
 	exclude group: 'org.springframework'
